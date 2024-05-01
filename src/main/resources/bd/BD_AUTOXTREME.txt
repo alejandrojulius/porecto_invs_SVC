@@ -1,0 +1,95 @@
+/*BD SISTEMA AUTOXTREME*/
+/*PASO 1: ELIMINAR LA BD*/
+drop database autoxtremev1;
+CREATE DATABASE  IF NOT EXISTS `autoxtremev1`;
+
+/*PASO 2: USAR LA BD ACTUAL*/
+USE `autoxtremev1`;
+
+/*PASO 3: IR AL SPRING Y LEVENTAR LA APLICACIÓN*/
+
+/*PASO 4: CORRER ESTO*/
+INSERT INTO marca (marca_id,descripcion) VALUES
+(1,'Audi'),
+(2,'Suzuki'),
+(3,'Haval'),
+(4,'Great Wall'),
+(5,'Honda'),
+(6,'Mazda'),
+(7,'Changan'),
+(8,'Mercedes-Benz');
+
+INSERT INTO tipoempleado (idtipo,descripcion) VALUES 
+(1,'administrador'),
+(2,'vendedor');
+
+INSERT INTO empleado (idempleado,dni,nombres,apellidos,telefono,idtipo,userempleado,clave,imgempleado) VALUES 
+(1,'75467562', 'Ruth Mery','Gutierrez Quecaño','967867870', 1, 'rut01', 'rut01', 'C:\Users\EDUARDO\Documents\workspace-spring-tool-suite-4-4.18.0.RELEASE\ProyectoWebV2\src\main\resources\static\imgs\usuarios\1.png'),
+(2,'71081921','Eduardo Andrés','Romaní Estrada','975179561',1,'edu28','edu$28','C:\Users\EDUARDO\Documents\workspace-spring-tool-suite-4-4.18.0.RELEASE\ProyectoWebV2\src\main\resources\static\imgs\usuarios\2.png'),
+(3,'33322212','Valery Karoline','Torres Roca','950426737',1,'vale01','vale01','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios3.png'),
+(4,'44221100','Ana María','Río Arango','978765567',2,'ana444','ana444','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios4.png'),
+(5,'55645635','Mónica Patricia','Ávalos Mendoza','955542424',2,'patiAva','patiAva','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios5.png'),
+(6,'23665170','Rosa María','Gómez Jiménez','911123222',2,'rosa236','rosa236','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios6.png'),
+(7,'00098988','Tulia Adriana','Suárez Muñoz','982772811',2,'tulia0','tulia0','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios7.png');
+
+
+INSERT INTO cliente (idcliente,dni,nombres,apellidos,direccion,correo,telefono) VALUES (1,'11223344','Juan Fernando','Perez del Corral','Los Alamos','juan@gmail.com',994433222),
+(2,'55473873','Ruth','Gutierrez Quecaño','Lurin ','ruth@gmail.com',955546462),
+(3,'98843838','Sofia ','Sánchez Pinar ','San Bartolo ','sofi@gmail.com',944353522),
+(4,'33232555','Valentina','Laverde de la Rosa','Los Alamos','vale@gmail.com',900023322),
+(5,'05909055',' Efraín','Casas Mejía','Lurin','efra@gmail.com',944231342),
+(6,'86776436','Julieta','Ponce de León','Punta Hermosa','juli@gmail.com',912190109),
+(7,'00274763',' Martín Elías','Ríos Acosta ','Lurin','mart@gmail.com',954562522),
+(8,'54442311','Gabriela',' Pava de la Torre','San Bartolo','gabi@gmail.com',900177266),
+(9,'02322334','Sebastián',' Campo Yepes ','Villa el Salvador ','sebas@gmail.com',933110919),
+(10,'76776683','Ana María',' Peña Posada','Los Alamos','ana@gmail.com',911210019),
+(11,'03834839','Mónica Patricia',' Ávalos Mendoza','Lurin','moni@gmail.com',901092910),
+(12,'55545411','Elvia','Muñoz de Hincapié','San Bartolo','elvi@gmail.com',901922212),
+(13,'21349744','Rosa María','Gómez de Jiménez','Los Alamos','rosa@gmail.com',945345677),
+(14,'08038400',' Margarita','Suárez de Muñoz','Lurin','mar@gmail.com',988877213),
+(15,'65667363','Lorena  ','Madrigal de López ','Punta Hermosa','lore@gmail.com',952516522);
+
+INSERT INTO carro (descripcion, origen, combustible, precio, stock, idmarca) VALUES 
+('SUZUKI DZIRE','Japon','Gasolina',13490,4000,2),
+('SUZUKI NUEVO SWIFT','Japon','Gasolina',14990,4000,2),
+('HAVAL NEW HAVAL JOLION','Rusia','Gasolina',19290,4000,3),
+('HAVAL ALL NEW HAVAL DARGO','Rusia','Gasolina',28990,4000,3),
+('HAVAL ALL NEW H6','Rusia','Gasolina',24590,4000,3),
+('GREAT WALL WINGLE 5','China','Gasolina',13690,4000,4),
+('GREAT WALL POER','China','Gasolina',20590,4000,4),
+('GREAT WALL WINGLE 7','China','Gasolina',19090,4000,4),
+('MAZDA NEW MAZDA2 SEDÁN','Japon','Gasolina',17490,4000,6),
+('MAZDA MAZDA CX-3','Japon','Gasolina',17990,4000,6),
+('MAZDA MAZDA CX-9','Japon','Gasolina',39990,4000,6),
+('CHANGAN NEW VAN','Chino','Gasolina',9990,4000,7),
+('CHANGAN HONOR S','Chino','Gasolina',12990,4000,7),
+('CHANGAN UNI-T','Chino','Gasolina',25490,4000,7);
+
+INSERT INTO ventas VALUES 
+(1,'00000001','2022-11-27',26610.8,1,1),
+(2,'00000002','2022-11-27',12490,2,1);
+
+INSERT INTO detalleventa VALUES
+(1,1,'Descripcion 1',26610.8,2660,1,1),
+(2,1,'Descripcion 2',26610.8,26610.8,2,2);
+
+select * from marca;
+select * from tipoempleado;
+select * from empleado;
+select * from cliente;
+select * from carro;
+select * from ventas;
+select * from detalleventa;
+
+SELECT c.nombres AS "CLIENTE",  em.Nombres AS "EMPLEADO", ca.descripcion AS "CARRO", d.Cantidad as "CANTIDAD",
+v.numeroserie AS "NUMERO_SERIE", v.fechaventas AS "FECHA_EMISION", v.Monto AS "MONTO"
+FROM ventas AS v
+JOIN cliente AS c
+ON v.idcliente=c.idcliente
+JOIN empleado as em
+ON em.idempleado=v.idempleado
+LEFT JOIN detalleventa AS d
+ON d.idventa=v.idventa
+LEFT JOIN carro AS ca
+ON ca.idcarro=d.idcarro 
+GROUP BY c.nombres,em.Nombres,ca.descripcion,d.Cantidad,v.numeroserie,v.fechaventas,v.Monto

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body style="margin-top: 75px; margin-left: 100px; background-image: linear-gradient(to right, #e4afcb 0%, #b8cbb8 0%, #b8cbb8 0%, #e2c58b 30%, #c2ce9c 64%, #7edbdc 100%) ;opacity: 100%;">
+<div class="container mt-4 col-lg-4">
+    <div style="border: 3px solid black;" class="card col-sm-10">
+        <div style="font-family: Courier New, monospace;" class="card-body ">
+           <form th:action="@{/login/validar}" class="form-sign" method="post">
+		    <div class="form-group text-center">
+		        <h3 style="font-size: 30px">Login</h3>
+		        <img style="margin-top: 0%;" src="imgs/logo.png" alt="" width="200">
+		        <label style="font-size: 20px; margin-top: 0px;">Bienvenidos al sistema SVC</label>
+		    </div>
+		    <div class="form-group">
+		        <label for="user">Usuario</label>
+		        <input type="text" id="user" name="user" class="form-control">
+		    </div>
+		    <div class="form-group">
+		        <label for="clave">Password</label>
+		        <input type="password" id="clave" name="clave" class="form-control">
+		    </div>
+		    <input type="submit" value="Ingresar" class="btn btn-primary btn-block">
+		</form>
+            <br>
+            <div class="alert alert-danger" role="alert" th:if="${mensaje}" th:text="${mensaje}"></div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous">
+</script>
+<script>
+  window.watsonAssistantChatOptions = {
+    integrationID: "ffbd24c3-e27a-43aa-847e-0c678c6827b0", // The ID of this integration.
+    region: "us-south", // The region your integration is hosted in.
+    serviceInstanceID: "8236545e-3e76-429a-b96f-9974ad11adf0", // The ID of your service instance.
+    onLoad: async (instance) => { await instance.render(); }
+  };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+    document.head.appendChild(t);
+  });
+</script>
+</body>
+</html>
