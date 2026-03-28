@@ -27,13 +27,14 @@ public class CarroController {
         System.out.println("listaa");
         return "crud-carros";
     }
-
-    /* @PostMapping("/carro/agregar")
+/* 
+     @PostMapping("/carro/agregar")
     public String agregarCarro(@ModelAttribute Carro carro, Model model) {
         // leer los datos ingresados
         System.out.println(carro);
         try {
             repoCar.save(carro);
+            model.addAttribute("carro", new Carro());
             model.addAttribute("lstMarca", repoMar.findAll());
             model.addAttribute("lstCarros", repoCar.findAll());
             model.addAttribute("mensaje", "Registro OK");
@@ -115,7 +116,7 @@ public class CarroController {
     public String agregarCarro(@ModelAttribute Carro carro,
                                Model model) {
         // leer los datos ingresados
-        System.out.println(carro);
+        //System.out.println(carro);
         model.addAttribute("lstMarca", repoMar.findAll());
         model.addAttribute("lstCarros", repoCar.findAll());
         try {
@@ -124,6 +125,7 @@ public class CarroController {
             }
             else {
                 model.addAttribute("mensaje2", "Registrar un texto válido en la descripción: "+ carro.getDescripcion());
+                model.addAttribute("carro", new Carro());
                 return "crud-carros";
             }
 
@@ -132,6 +134,7 @@ public class CarroController {
             }
             else {
                 model.addAttribute("mensaje2", "Ingrese un categoria válida: "+ carro.getObjMarca().getIdmarca());
+                model.addAttribute("carro", new Carro());
                 return "crud-carros";
             }
 
@@ -140,6 +143,7 @@ public class CarroController {
             }
             else {
                 model.addAttribute("mensaje2", "Registrar un texto válido en el origen: "+ carro.getOrigen());
+                model.addAttribute("carro", new Carro());
                 return "crud-carros";
             }
 
@@ -148,6 +152,7 @@ public class CarroController {
             }
             else {
                 model.addAttribute("mensaje2", "Registrar un texto válido en el combustible: "+ carro.getCombustible());
+                model.addAttribute("carro", new Carro());
                 return "crud-carros";
             }
 
@@ -156,6 +161,7 @@ public class CarroController {
             }
             else {
                 model.addAttribute("mensaje2", "Ingrese un precio válido: "+ carro.getPrecio());
+                model.addAttribute("carro", new Carro());
                 return "crud-carros";
             }
 
@@ -164,6 +170,7 @@ public class CarroController {
             }
             else {
                 model.addAttribute("mensaje2", "Ingrese un stock válido: "+ carro.getStock());
+                model.addAttribute("carro", new Carro());
                 return "crud-carros";
             }
             repoCar.save(carro);

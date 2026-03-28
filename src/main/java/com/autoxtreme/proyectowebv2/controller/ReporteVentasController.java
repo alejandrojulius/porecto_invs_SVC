@@ -30,14 +30,7 @@ public class ReporteVentasController {
 
     private final IVentaRepository ventaRepository;
 
-    @Autowired
-    private IClienteRepository repoCliente;
 
-    @Autowired
-    private IEmpleadoRepository repoEmpleado;
-
-    @Autowired
-    private ICarroRepository repoCarro;
 
     @Autowired
     private IDetalleVentaRepository repoDetalle;

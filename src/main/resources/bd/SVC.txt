@@ -1,10 +1,10 @@
-/*BD SISTEMA AUTOXTREME*/
+/*BD SISTEMA SVC*/
 /*PASO 1: ELIMINAR LA BD*/
-drop database autoxtremev1;
-CREATE DATABASE  IF NOT EXISTS `autoxtremev1`;
+drop database SVC;
+CREATE DATABASE  IF NOT EXISTS `SVC`;
 
 /*PASO 2: USAR LA BD ACTUAL*/
-USE `autoxtremev1`;
+USE `SVC`;
 
 /*PASO 3: IR AL SPRING Y LEVENTAR LA APLICACIÓN*/
 
@@ -24,20 +24,19 @@ INSERT INTO tipoempleado (idtipo,descripcion) VALUES
 (2,'vendedor');
 
 INSERT INTO empleado (idempleado,dni,nombres,apellidos,telefono,idtipo,userempleado,clave,imgempleado) VALUES 
-(1,'75467562', 'Ruth Mery','Gutierrez Quecaño','967867870', 1, 'rut01', 'rut01', 'C:\Users\EDUARDO\Documents\workspace-spring-tool-suite-4-4.18.0.RELEASE\ProyectoWebV2\src\main\resources\static\imgs\usuarios\1.png'),
-(2,'71081921','Eduardo Andrés','Romaní Estrada','975179561',1,'edu28','edu$28','C:\Users\EDUARDO\Documents\workspace-spring-tool-suite-4-4.18.0.RELEASE\ProyectoWebV2\src\main\resources\static\imgs\usuarios\2.png'),
-(3,'33322212','Valery Karoline','Torres Roca','950426737',1,'vale01','vale01','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios3.png'),
-(4,'44221100','Ana María','Río Arango','978765567',2,'ana444','ana444','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios4.png'),
-(5,'55645635','Mónica Patricia','Ávalos Mendoza','955542424',2,'patiAva','patiAva','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios5.png'),
-(6,'23665170','Rosa María','Gómez Jiménez','911123222',2,'rosa236','rosa236','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios6.png'),
-(7,'00098988','Tulia Adriana','Suárez Muñoz','982772811',2,'tulia0','tulia0','C:UsersRuthDesktopCibertecCiclo-4Lenguaje de Programación IIProyecto-V2Proyecto-V2srcmainwebappimgsusuarios7.png');
+(1,'72849446', 'Jack Bernard','Villafuerte Salhuana','934540144', 1, 'jack01', 'jack01', 'C:\Users\Jack\Downloads\1.png'),
+(2,'76395753','Lesly','Carrasco','964287775',1,'les02','les02','C:\Users\Jack\Downloads\2.png'),
+(3,'70510948','Cameron Antuane','Díaz León','902578924',1,'cam03','cam03','C:\Users\Jack\Downloads\3.png'),
+(4,'73265633','Alejandro','Fernandez','980631297',2,'ale04','ale04','C:\Users\Jack\Downloads\4.png'),
+(5,'74151069','Anthony','Huaringa','939096581',2,'ant05','ant05','C:\Users\Jack\Downloads\5.png'),
+(6,'72089299','Efrain','Ramos Chipana','992268453',2,'efr06','efr06','C:\Users\6.png');
 
 
-INSERT INTO cliente (idcliente,dni,nombres,apellidos,direccion,correo,telefono) VALUES (1,'11223344','Juan Fernando','Perez del Corral','Los Alamos','juan@gmail.com',994433222),
-(2,'55473873','Ruth','Gutierrez Quecaño','Lurin ','ruth@gmail.com',955546462),
+INSERT INTO cliente (idcliente,dni,nombres,apellidos,direccion,correo,telefono) VALUES (1,'11223344','Juan Corrales','Perez del Corral','Los Alamos','juan@gmail.com',994433222),
+(2,'55473873','Jorge','Salgado Quecaño','Lurin ','jorge@gmail.com',955546462),
 (3,'98843838','Sofia ','Sánchez Pinar ','San Bartolo ','sofi@gmail.com',944353522),
 (4,'33232555','Valentina','Laverde de la Rosa','Los Alamos','vale@gmail.com',900023322),
-(5,'05909055',' Efraín','Casas Mejía','Lurin','efra@gmail.com',944231342),
+(5,'05909055',' Elmo','Casas Mejía','Lurin','elmo@gmail.com',944231342),
 (6,'86776436','Julieta','Ponce de León','Punta Hermosa','juli@gmail.com',912190109),
 (7,'00274763',' Martín Elías','Ríos Acosta ','Lurin','mart@gmail.com',954562522),
 (8,'54442311','Gabriela',' Pava de la Torre','San Bartolo','gabi@gmail.com',900177266),
@@ -45,9 +44,9 @@ INSERT INTO cliente (idcliente,dni,nombres,apellidos,direccion,correo,telefono) 
 (10,'76776683','Ana María',' Peña Posada','Los Alamos','ana@gmail.com',911210019),
 (11,'03834839','Mónica Patricia',' Ávalos Mendoza','Lurin','moni@gmail.com',901092910),
 (12,'55545411','Elvia','Muñoz de Hincapié','San Bartolo','elvi@gmail.com',901922212),
-(13,'21349744','Rosa María','Gómez de Jiménez','Los Alamos','rosa@gmail.com',945345677),
+(13,'21349744','Rosa','Salas','Los Alamos','rosa@gmail.com',945345677),
 (14,'08038400',' Margarita','Suárez de Muñoz','Lurin','mar@gmail.com',988877213),
-(15,'65667363','Lorena  ','Madrigal de López ','Punta Hermosa','lore@gmail.com',952516522);
+(15,'65667363','Lorena','Madrigal de López ','Punta Hermosa','lore@gmail.com',952516522);
 
 INSERT INTO carro (descripcion, origen, combustible, precio, stock, idmarca) VALUES 
 ('SUZUKI DZIRE','Japon','Gasolina',13490,4000,2),
@@ -66,8 +65,8 @@ INSERT INTO carro (descripcion, origen, combustible, precio, stock, idmarca) VAL
 ('CHANGAN UNI-T','Chino','Gasolina',25490,4000,7);
 
 INSERT INTO ventas VALUES 
-(1,'00000001','2022-11-27',26610.8,1,1),
-(2,'00000002','2022-11-27',12490,2,1);
+(1,'00000001','2024-04-05',26610.8,1,1),
+(2,'00000002','2024-04-12',12490,2,1);
 
 INSERT INTO detalleventa VALUES
 (1,1,'Descripcion 1',26610.8,2660,1,1),

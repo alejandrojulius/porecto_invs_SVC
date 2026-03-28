@@ -1,6 +1,6 @@
 package com.autoxtreme.proyectowebv2.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class Marca {
     private String descripcion;
 
     @OneToMany(mappedBy = "objMarca")
-    @JsonIgnore
+    //@JsonIgnore
     Set<Carro> carro;
 
 

@@ -7,21 +7,23 @@ import com.autoxtreme.proyectowebv2.model.*;
 import com.autoxtreme.proyectowebv2.repository.ICarroRepository;
 import com.autoxtreme.proyectowebv2.repository.IClienteRepository;
 import com.autoxtreme.proyectowebv2.repository.IDetalleVentaRepository;
+import com.autoxtreme.proyectowebv2.repository.IEmpleadoRepository;
 import com.autoxtreme.proyectowebv2.repository.IVentaRepository;
 import com.autoxtreme.proyectowebv2.utils.GenerarSerie;
-import lombok.Data;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.sql.Date;
 import java.util.List;
-import java.text.SimpleDateFormat;
+
 @Controller
 @SessionAttributes({"carrito","empleado"})
 public class VentaController {
@@ -31,6 +33,9 @@ public class VentaController {
 
     @Autowired
     private IClienteRepository repoCli;
+    
+    @Autowired
+    private IEmpleadoRepository repoEmp;    
 
     @Autowired
     private ICarroRepository repoCar;
@@ -39,6 +44,8 @@ public class VentaController {
     Venta ventaG = new Venta();
 
     Carro carroG = new Carro();
+    //Empleado agregado
+    Empleado empleado= new Empleado(); 
 
     LocalDate localDate = LocalDate.now();
     Date fecha = Date.valueOf(localDate);
@@ -50,10 +57,18 @@ public class VentaController {
     private IDetalleVentaRepository detalleVentaRepository;
 
     @GetMapping("/registro/venta")
-    public String cargarPagRegistroVenta(Model model){
+    public String cargarPagRegistroVenta(Model model, HttpSession session){
         String serie = generarSerie.numeroSerie(repoVen.findFirstByOrderByIdDesc().orElse(new Venta()).getId());
         ventaIns.setNumserie(serie);
-        Empleado empleado = (Empleado)model.getAttribute("empleado");
+        //Empleado empleado = (Empleado)model.getAttribute("empleado");
+        Empleado empleadoT = new Empleado();
+        
+        String codusuario = (String)session.getAttribute("codusuario");
+        String clave      = (String)session.getAttribute("clave");        
+        System.out.println("usuario login " + codusuario + " y clave " + clave);
+        
+        empleadoT = repoEmp.findByUserAndClave(codusuario, clave);
+        empleado = empleadoT;
         if(empleado==null){
             model.addAttribute("serie",serie);
             model.addAttribute("carroForm", carroFormG);
@@ -63,9 +78,6 @@ public class VentaController {
             model.addAttribute("carro",carroG);
             List<Carrito> carritoList = (List<Carrito>) model.getAttribute("carrito");
             model.addAttribute("carrito", carritoList);
-
-            System.out.println();
-            return "registro-ventas";
         }
         ventaIns.setIdEmpleado(empleado.getIdEmpleado());
         model.addAttribute("serie",serie);
@@ -77,7 +89,6 @@ public class VentaController {
         List<Carrito> carritoList = (List<Carrito>) model.getAttribute("carrito");
         model.addAttribute("carrito", carritoList);
 
-        System.out.println();
         return "registro-ventas";
     }
 
@@ -91,10 +102,10 @@ public class VentaController {
         clienteG = cliente;
         ventaIns.setIdCliente(cliente.getIdCli());
 
-        List<Carrito> carritosList = (List<Carrito>) model.getAttribute("carrito");
-        model.addAttribute("carrito", carritosList);
-        String serie = generarSerie.numeroSerie(repoVen.findFirstByOrderByIdDesc().orElse(new Venta()).getId());
-        model.addAttribute("serie",serie);
+        //List<Carrito> carritosList = (List<Carrito>) model.getAttribute("carrito");
+        //model.addAttribute("carrito", carritosList);
+        //String serie = generarSerie.numeroSerie(repoVen.findFirstByOrderByIdDesc().orElse(new Venta()).getId());
+        //model.addAttribute("serie",serie);
         model.addAttribute("carroForm", carroFormG);
         model.addAttribute("cliente", clienteG);
         model.addAttribute("venta",ventaG);
@@ -112,10 +123,10 @@ public class VentaController {
         System.out.println(carroObtenido.getId());
         carroG = carroObtenido;
         carroFormG.setIdCarro(carroG.getId());
-        List<Carrito> carritosList = (List<Carrito>) model.getAttribute("carrito");
-        model.addAttribute("carrito", carritosList);
-        String serie = generarSerie.numeroSerie(repoVen.findFirstByOrderByIdDesc().orElse(new Venta()).getId());
-        model.addAttribute("serie",serie);
+        //List<Carrito> carritosList = (List<Carrito>) model.getAttribute("carrito");
+        //model.addAttribute("carrito", carritosList);
+        //String serie = generarSerie.numeroSerie(repoVen.findFirstByOrderByIdDesc().orElse(new Venta()).getId());
+        //model.addAttribute("serie",serie);
         model.addAttribute("carroForm",carroFormG);
         model.addAttribute("cliente", clienteG);
         model.addAttribute("venta",ventaG);
@@ -146,6 +157,7 @@ public class VentaController {
         }
         Carrito carrito = new Carrito();
         carrito.setId(obtenerUltimoId(model)+1);
+        System.out.println("correlativo detalle " + (obtenerUltimoId(model)+1));  
         carrito.setCarro(carro);
         carrito.setCantidad(carroForm.getCantidad());
         carrito.setSubtotal(carroForm.getCantidad() * carro.getPrecio());
@@ -193,21 +205,47 @@ public class VentaController {
 
     @PostMapping("/agregarVenta")
     public String cargarAgregadoVenta(@ModelAttribute VentaInsert ventaInsert, Model model){
-        Empleado empleado = new Empleado();
-        empleado.setIdEmpleado(ventaInsert.getIdEmpleado());
+
         Venta venta = new Venta();
         venta.setMonto(ventaIns.getMonto());
         venta.setNumserie(ventaIns.getNumserie());
         venta.setCliente(clienteG);
-        venta.setEmpleado(empleado);
-        
+        venta.setEmpleado(empleado);        
 
         // Asigna la fecha formateada al objeto venta
         venta.setFecha(ventaInsert.getFecha());
         // leer los datos ingresados
-        System.out.println(ventaInsert);
-        System.out.println("hasdfhkasdhfaskhdf");
+        //System.out.println("Intenta agregar la venta");        
+        //System.out.println(ventaInsert);
+        //System.out.println("hasdfhkasdhfaskhdf");
+        repoVen.save(venta);
+   
+        try {
 
+            //repoVen.save(venta);
+            
+            List<Carrito> carritoList = (List<Carrito>) model.getAttribute("carrito");
+            assert carritoList != null;
+            for(Carrito car : carritoList){
+                DetalleVenta detalleVenta = new DetalleVenta();
+                detalleVenta.setVenta(venta);
+                detalleVenta.setCantidad(car.getCantidad());
+                detalleVenta.setCarro(car.getCarro());
+                detalleVenta.setDescripcionC(car.getCarro().getDescripcion());
+                detalleVenta.setPrecio(car.getCarro().getPrecio());
+                detalleVenta.setSubtotal(car.getCantidad() * car.getCarro().getPrecio());
+                detalleVentaRepository.save(detalleVenta);
+                System.out.println(car.getCarro().getDescripcion());
+            }
+                       
+        } catch(Exception e) {
+
+            model.addAttribute("carrito", new ArrayList<Carrito>());
+            model.addAttribute("mensaje", "No se Registró");
+        }
+        model.addAttribute("mensaje", "Venta registrada correctamente"); 
+
+        //Cargar con variables vacias luego de grabar
         clienteG = new Cliente();
         ventaG = new Venta();
         ventaIns = new VentaInsert();
@@ -219,30 +257,7 @@ public class VentaController {
         model.addAttribute("venta", ventaG);
         model.addAttribute("carro", carroG);
         model.addAttribute("ventainsert", ventaIns);
-
-        try {
-
-            repoVen.save(venta);
-            List<Carrito> carritoList = (List<Carrito>) model.getAttribute("carrito");
-            assert carritoList != null;
-            for(Carrito car : carritoList){
-                DetalleVenta detalleVenta = new DetalleVenta();
-                detalleVenta.setVenta(venta);
-                detalleVenta.setCantidad(car.getCantidad());
-                detalleVenta.setCarro(car.getCarro());
-                detalleVenta.setDescripcionC(car.getCarro().getDescripcion());
-                detalleVenta.setPrecio(car.getCarro().getPrecio());
-                detalleVentaRepository.save(detalleVenta);
-                System.out.println(car.getCarro().getDescripcion());
-            }
-
-            model.addAttribute("carrito", new ArrayList<Carrito>());
-            model.addAttribute("lstVenta", repoVen.findAll());
-        } catch(Exception e) {
-
-            model.addAttribute("carrito", new ArrayList<Carrito>());
-            model.addAttribute("mensaje", "No se Registró");
-        }
+        model.addAttribute("carrito", new ArrayList<Carrito>());
 
         return "registro-ventas";
     }

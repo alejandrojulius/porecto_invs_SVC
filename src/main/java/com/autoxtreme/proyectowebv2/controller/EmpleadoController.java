@@ -29,7 +29,7 @@ public class EmpleadoController {
     @PostMapping("/empleado/agregar")
     public String agregarEmpleado(@ModelAttribute Empleado empleado, Model model) {
         // leer los datos ingresados
-        System.out.println(empleado);
+        //System.out.println(empleado);
         try {
             repoEmple.save(empleado);
             model.addAttribute("empleado", new Empleado());
