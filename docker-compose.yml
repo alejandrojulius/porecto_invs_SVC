@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app:
+    image: svcdocker
+    build: .                  # construye desde tu Dockerfile
+    ports:
+      - "8080:8080"           # o "8081:8080" si 8080 está ocupado
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/tu_base_de_datos?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: tu_usuario
+      SPRING_DATASOURCE_PASSWORD: tu_contraseña
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tu_base_de_datos
+      MYSQL_USER: tu_usuario
+      MYSQL_PASSWORD: tu_contraseña
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:
+    driver: bridge
