@@ -4,8 +4,7 @@ WORKDIR /app
 
 COPY target/*.jar app.jar
 
-# Render usa la variable de entorno PORT
 EXPOSE ${PORT:-8080}
 
-# Le decimos a Spring Boot que use el puerto que Render nos da
-ENTRYPOINT ["java", "-Dserver.port=${PORT:-8080}", "-jar", "app.jar"]
+# Configuración para Render + desactivar temporalmente JPA si la BD no está lista
+ENTRYPOINT ["java", "-Dserver.port=${PORT:-8080}",  "-Dspring.profiles.active=prod", "-Dspring.jpa.hibernate.ddl-auto=none", "-jar", "app.jar"]
