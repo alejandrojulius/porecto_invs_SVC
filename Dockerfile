@@ -1,12 +1,11 @@
-FROM eclipse-temurin:21-jre-alpine
-
+# Etapa 1: build
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copia el JAR
-COPY target/*.jar app.jar
-
-# Render usa la variable PORT
-EXPOSE ${PORT:-8080}
-
-# Ejecuta Spring Boot usando el puerto de Render
-CMD ["java", "-Dserver.port=${PORT:-8080}", "-jar", "app.jar"]
+# Etapa 2: run
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+CMD ["java", "-jar", "app.jar"]
