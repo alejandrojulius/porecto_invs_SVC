@@ -2,9 +2,11 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
+# Copia el JAR
 COPY target/*.jar app.jar
 
+# Render usa la variable PORT
 EXPOSE ${PORT:-8080}
 
-# Configuración para Render + desactivar temporalmente JPA si la BD no está lista
-ENTRYPOINT ["java", "-Dserver.port=${PORT:-8080}",  "-Dspring.profiles.active=prod", "-Dspring.jpa.hibernate.ddl-auto=none", "-jar", "app.jar"]
+# Ejecuta Spring Boot usando el puerto de Render
+CMD ["java", "-Dserver.port=${PORT:-8080}", "-jar", "app.jar"]
